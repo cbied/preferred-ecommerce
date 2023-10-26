@@ -1,7 +1,22 @@
-import Categories from './components/categories/categories.component'
+import Home from './routes/home/home.component';
+import Navigation from './routes/navigation/navigation.component';
+import { Routes, Route } from 'react-router-dom'
+
+const Shop = () => {
+    return <h2>shop</h2>
+}
 
 const App = () => {
-  return <Categories />
+  return (
+    <Routes>
+      <Route path='/' element={ <Navigation /> }>
+        <Route index element={ <Home /> } />
+        <Route path='/shop' element={ <Shop /> } />
+        <Route path='/contact' element={ <Shop /> } />
+        <Route path='/signin' element={ <Shop /> } />
+      </Route>
+    </Routes>
+  )
 }
 
 export default App;
