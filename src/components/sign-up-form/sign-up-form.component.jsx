@@ -17,19 +17,26 @@ const SignUpForm = () => {
 
     const submitForm = async (event) => {
         event.preventDefault();
+
+        // if password does not match confirm password, kick back to user
         if(password !== confirmPassword) {
             alert("Passwords do not match")
             return
         } 
         try {
+            // try to create new user with email and password
             const { user } = await createAuthUserWithEmailAndPassword(email, password)
+            // add user display name
             await createUserDocFromAuth(user, { displayName })
             alert("User created successfully")
+            // reset form fields
             setFormFields(defualtFormFields)
         } catch (error) {
+            // Email already in databases
             if(error.code === "auth/email-already-in-use") {
                 console.error(error.message)
                 alert("Email already in use")
+                // password less than 6 characters
             } else if (error.code === "auth/weak-password") {
                 console.error(error.message)
                 alert("Password must be at least 6 characters long")
@@ -39,6 +46,7 @@ const SignUpForm = () => {
         }
     }
 
+    // update form fields
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormFields({...formFields, [name]: value})
