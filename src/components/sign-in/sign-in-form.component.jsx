@@ -1,10 +1,8 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import FormInput from "../form-input/form-input.component"
 import Button from '../button/button.component'
 import { signInUserWithEmailAndPassword,
-         signInWithGooglePopup, 
-         createUserDocFromAuth, } from '../../utils/firebase/firebase.utils'
-import { UserContext } from "../../contexts/user.context";
+         signInWithGooglePopup } from '../../utils/firebase/firebase.utils'
 import './sign-in-form.styles.scss'
 
 const defualtFormFields = {
@@ -19,7 +17,6 @@ const SignInForm = () => {
     const [ formFields, setFormFields ] = useState(defualtFormFields);
     const { email, password } = formFields;
     // set current user to share with other components
-    const { setCurrentUser } = useContext(UserContext)
 
     // update form fields
     const handleChange = (event) => {
@@ -29,10 +26,7 @@ const SignInForm = () => {
 
     const loginGoogleUserPopup = async () => {
         try {
-            const response = await signInWithGooglePopup();
-            const userDocRef = await createUserDocFromAuth(response.user);
-            const currentUser = userDocRef.firestore._authCredentials.auth.auth.currentUser
-            setCurrentUser(currentUser)
+            await signInWithGooglePopup();   
         } catch (error) {
             if (error.code === 'auth/popup-closed-by-user') {
                 console.log(error.code)
@@ -52,7 +46,7 @@ const SignInForm = () => {
             const { user } = await signInUserWithEmailAndPassword(email, password)
             if (user) {
                 // set the current user in context to share with other components
-                setCurrentUser(user)
+                
                 alert("User Signed in successfully")
                 // reset form fields
                 setFormFields(defualtFormFields)
