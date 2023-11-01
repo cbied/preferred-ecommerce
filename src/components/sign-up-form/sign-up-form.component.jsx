@@ -1,6 +1,7 @@
 import { useState } from "react";
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
+import LoadingPage from '../loading-page/loading-page.componet'
 import { createUserDocFromAuth,
          createAuthUserWithEmailAndPassword } from '../../utils/firebase/firebase.utils'
 import './sign-up-form.styles.scss';
@@ -9,11 +10,14 @@ const defualtFormFields = {
     email: "",
     password: "",
     confirmPassword: "",
+    isLoading: false
 }
 
 const SignUpForm = () => {
     const [ formFields, setFormFields ] = useState(defualtFormFields);
-    const { displayName, email, password, confirmPassword } = formFields;
+    const { displayName, email, password, confirmPassword, isLoading } = formFields;
+
+    
     
     const submitForm = async (event) => {
         event.preventDefault();
@@ -23,6 +27,7 @@ const SignUpForm = () => {
             alert("Passwords do not match")
             return
         } 
+        setFormFields({...formFields, isLoading: true})
         try {
             // try to create new user with email and password
             const { user } = await createAuthUserWithEmailAndPassword(email, password)
@@ -31,17 +36,21 @@ const SignUpForm = () => {
             alert("User created successfully")
             // reset form fields
             setFormFields(defualtFormFields)
+            setFormFields({...formFields, isLoading: false})
         } catch (error) {
             // Email already in databases
             if(error.code === "auth/email-already-in-use") {
                 console.error(error.message)
                 alert("Email already in use")
+                setFormFields({...formFields, isLoading: false})
                 // password less than 6 characters
             } else if (error.code === "auth/weak-password") {
                 console.error(error.message)
                 alert("Password must be at least 6 characters long")
+                setFormFields({...formFields, isLoading: false})
             } else {
                 console.log('createAuthUserWithEmailAndPassword error: ', error)
+                setFormFields({...formFields, isLoading: false})
             }
         }
     }
@@ -54,6 +63,7 @@ const SignUpForm = () => {
 
     return(
         <div className="sign-up-container">
+        <LoadingPage isLoading={isLoading} />
             <h2>Don't have an account?</h2>
             <span>Sign up with your email and password</span>
             <form onSubmit={submitForm}>
