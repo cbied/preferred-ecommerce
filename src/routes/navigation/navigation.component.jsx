@@ -2,6 +2,7 @@ import { Outlet, Link } from "react-router-dom";
 import { Fragment, useContext } from "react";
 import { signOutUser } from "../../utils/firebase/firebase.utils";
 import { UserContext } from "../../contexts/user.context";
+import { ProductsContext } from "../../contexts/products.context";
 import { ReactComponent as CrwnLogo } from '../../assets/crown.svg'
 import './navigation.styles.scss'
 
@@ -9,7 +10,10 @@ import './navigation.styles.scss'
 
 const Navigation = () => {
     const { currentUser } = useContext(UserContext)
-    console.log(currentUser)
+    
+    // console.log(products.map(product => {
+    //     return product.name
+    // }))
     
 
     return (

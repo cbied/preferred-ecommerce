@@ -31,7 +31,7 @@ const firebaseConfig = {
 
   export const auth = getAuth()
   export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider)
-  export const db = getFirestore()
+  export const db = getFirestore(firebaseApp)
   export const createUserDocFromAuth = async (userAuth, additionalInfo = {}) => {
     if (!userAuth) return;
 
