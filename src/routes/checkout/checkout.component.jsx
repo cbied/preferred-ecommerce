@@ -25,9 +25,12 @@ const Checkout = () => {
             <span>Remove</span>
           </div>
         </div>
-        {cartItems.map((cartItem) => (
+        {cartItems.length ? cartItems.map((cartItem) => (
           <CheckoutItem key={cartItem.id} cartItem={cartItem} />
-        ))}
+        ))
+          :
+          <h3 className='no-items-in-cart'>No Items in cart</h3>
+      }
         <div className='total'>TOTAL: ${cartTotal}</div>
       </div>
     )
