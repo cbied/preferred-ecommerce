@@ -19,6 +19,7 @@ export const CategoriesProvider = ({ children }) => {
 
         getCategoriesMap()
     }, [])
+    console.log(value)
 
     return <CategoriesContext.Provider value={value}>{ children }</CategoriesContext.Provider>
 }
