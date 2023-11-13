@@ -4,7 +4,7 @@ import Button from "../button/button.component";
 import LoadingPage from '../loading-page/loading-page.componet'
 import { createUserDocFromAuth,
          createAuthUserWithEmailAndPassword } from '../../utils/firebase/firebase.utils'
-import './sign-up-form.styles.scss';
+import { SignUpContainer, H2 } from './sign-up-form.styles';
 const defualtFormFields = {
     displayName: "",
     email: "",
@@ -62,9 +62,9 @@ const SignUpForm = () => {
     }
 
     return(
-        <div className="sign-up-container">
+        <SignUpContainer>
         <LoadingPage isLoading={isLoading} />
-            <h2>Don't have an account?</h2>
+            <H2>Don't have an account?</H2>
             <span>Sign up with your email and password</span>
             <form onSubmit={submitForm}>
                 <FormInput  label="Display Name: " 
@@ -98,7 +98,7 @@ const SignUpForm = () => {
                     Submit
                 </Button>
             </form>
-        </div>
+        </SignUpContainer>
     )
 }
 

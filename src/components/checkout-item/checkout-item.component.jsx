@@ -1,6 +1,12 @@
 import { useContext } from 'react'
 import { CartContext } from '../../contexts/cart.context';
-import './checkout-item.styles.scss';
+import { CheckoutItemContainer,
+         ImageContainer,
+         CartItemValues,
+         Quantity,
+         Arrow,
+         Value,
+         RemoveButton} from './checkout-item.styles';
 
 const CheckoutcartItem = ({ cartItem }) => {
     const { addItemToCart, subtractItemFromCart, removeItemFromCart } = useContext(CartContext);
@@ -11,30 +17,30 @@ const CheckoutcartItem = ({ cartItem }) => {
     const handleRemoveProductFromCart = () => removeItemFromCart(cartItem)
 
     return(
-        <div className='checkout-item-container'>
-            <div className='image-container'>
+        <CheckoutItemContainer>
+            <ImageContainer>
                 <img src={ imageUrl } alt={ name } />
-            </div>
-            <span className='name'>{ name }</span>
+            </ImageContainer>
+            <CartItemValues>{ name }</CartItemValues>
 
-            <span className='quantity'>
-                <div className='arrow' onClick={handleQuantityUpdateDecrease}> 
+            <Quantity>
+                <Arrow onClick={handleQuantityUpdateDecrease}> 
                     &#10094; 
-                </div>
-                <span className='value'>{ quantity }</span>
+                </Arrow>
+                <Value>{ quantity }</Value>
                 
             
-                <div className='arrow' onClick={handleQuantityUpdateIncrease}> 
+                <Arrow onClick={handleQuantityUpdateIncrease}> 
                     &#10095; 
-                </div>
-            </span>
+                </Arrow>
+            </Quantity>
             
-            <span className='price'>{ price }</span>
+            <CartItemValues>{ price }</CartItemValues>
             
-            <div className='remove-button' onClick={handleRemoveProductFromCart}>
+            <RemoveButton onClick={handleRemoveProductFromCart}>
                 &#10005;
-            </div>
-        </div>  
+            </RemoveButton>
+        </CheckoutItemContainer>  
     )
 }
 

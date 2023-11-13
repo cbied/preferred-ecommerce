@@ -1,10 +1,10 @@
 import CategoryItem from '../category/category-item.component'
 import categoryData from '../../assets/categories.json';
-import './directory.styles.scss';
+import { DirectoryContainer } from './directory.styles';
 
 const Directory = () => {
     return (
-        <div className='categories-container'>
+        <DirectoryContainer>
       {
         categoryData.categories.map(categoryProduct => {
           return (
@@ -12,7 +12,7 @@ const Directory = () => {
           )
         })
       }
-    </div>
+    </DirectoryContainer>
     )
 }
 

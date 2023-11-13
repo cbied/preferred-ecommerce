@@ -3,24 +3,27 @@ import { Link } from "react-router-dom";
 import { CartContext } from '../../contexts/cart.context';
 import CartItem from '../cart-item/cart-item.component';
 import Button from '../button/button.component';
-import './cart-dropdown.styles.scss';
+import { CartDropdownContainer,
+         EmptyMessage,
+         CartItems } from './cart-dropdown.styles';
 
 const CartDropdown = () => {
     const { cartItems, setisCartOpen } = useContext(CartContext);
-
     const toggleCartDropDown = () => setisCartOpen(false);
-
     return(
-        <div className='cart-dropdown-container'>
-            <div  className='cart-items'>
+        <CartDropdownContainer>
+            <CartItems>
                 { 
+                    cartItems.length ?
                     cartItems.map(item => <CartItem key={item.id} cartItem={item} />)
+                    :
+                    <EmptyMessage>No Cart Items</EmptyMessage>
                 }
-            </div>
-            <Link className='nav-link' to="/checkout">       
+            </CartItems>
+            <Link to="/checkout">       
             <Button onClick={toggleCartDropDown}>Go to Checkout</Button>
             </Link>
-        </div>
+        </CartDropdownContainer>
     )
 }
 
