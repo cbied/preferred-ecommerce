@@ -6,11 +6,13 @@ const CategoryPreview = ({ title, products }) => {
 
     return(
         <div className='category-preview-container'>
-            <Link to={`/shop/${title}`}>
+            
                 <h2>
-                    <span className='title'>{ title.toUpperCase() }</span>
+                    <span className='title'>
+                        <Link to={title}>{ title.toUpperCase() }</Link>
+                    </span>
                 </h2>
-            </Link>
+            
             <div className='preview'>
                 {
                     products
@@ -18,6 +20,9 @@ const CategoryPreview = ({ title, products }) => {
                     .map((product) => <ProductCard key={product.id} product={product}/>)
                 }
             </div>
+            <p className='view-more'>
+                <Link to={title}>View More</Link>
+            </p>
         </div>
     )
 }
