@@ -1,4 +1,5 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useReducer } from "react";
+import { createAction } from '../utils/reducer/reducer.utils';
 
 const addCartItem = (cartItems, productToAdd) => {
     // find if item is in cart already
@@ -31,6 +32,42 @@ const removeCartItem = (cartItems, productToRemove) => {
         )
 }
 
+const clearCartItem = (cartItems, cartItemToClear) =>
+  cartItems.filter((cartItem) => cartItem.id !== cartItemToClear.id);
+
+const CART_ACTION_TYPES = {
+    SET_IS_CART_OPEN: 'SET_IS_CART_OPEN',
+    SET_CART_ITEMS: 'SET_CART_ITEMS'
+  };
+
+const { SET_IS_CART_OPEN, SET_CART_ITEMS } = CART_ACTION_TYPES
+
+export const INITIAL_CART_STATE = {
+    isCartOpen: false,
+    cartItems: [],
+    cartCount: 0,
+    cartTotal: 0,
+}
+
+export const cartReducer = (state, action) => {
+    const { type, payload } = action;
+
+    switch (type) {
+        case SET_CART_ITEMS:
+            return {
+                ...state,
+                ...payload
+            }
+        case SET_IS_CART_OPEN:
+            return {
+                ...state,
+                isCartOpen: payload
+            }
+        default:
+            throw new Error(`Unhandled type: ${type} in cartReducer`);
+    }
+
+}
 
 export const CartContext = createContext({
     isCartOpen: false,
@@ -38,66 +75,66 @@ export const CartContext = createContext({
     cartItems: [],
     addItemToCart: () => {},
     subtractItemFromCart: () => {},
-    removeItemFromCart: () => {},
+    clearItemFromCart: () => {},
     cartCount: 0,
     setCartTotal: () => {},
     cartTotal: 0
 })
 
 export const CartProvider = ({ children }) => {
-    const [ isCartOpen, setisCartOpen ] = useState(false);
-    const [ cartItems, setCartItems ] = useState([]);
-    const [ cartCount, setCartCount ] = useState(0);
-    const [ cartTotal, setCartTotal ] = useState(0);
-
-    useEffect(() => {
-        // listen for cartItems to be changed
-        // if cartItems are changed, update the quantity of the item
-        const newCartCount = cartItems.reduce((total, cartItem) => {
+    const [ state, dispatch ] = useReducer(cartReducer, INITIAL_CART_STATE);
+    const { cartItems, cartCount, cartTotal, isCartOpen } = state
+    
+    const updateCartItemsReducer = (newCartItems) => {
+        // update the quantity of the item
+        const newCartCount = newCartItems.reduce((total, cartItem) => {
             return total + cartItem.quantity
         }, 0)
-        
-        setCartCount(newCartCount);
-
-}, [ cartItems ])
-
-    useEffect(() => {
-        // listen for cartCount to be changed
-        // if cartCount is changed, update total price of cart
-        const newCartTotal = cartItems.reduce((total, cartItem) => {
+        // update total cost of cart items
+        const newCartTotal = newCartItems.reduce((total, cartItem) => {
             return total + (cartItem.price * cartItem.quantity)
         }, 0)
 
-        setCartTotal(newCartTotal)
+        const payload = {
+            cartItems: newCartItems,
+            cartCount: newCartCount,
+            cartTotal: newCartTotal
+        }
 
-        }, [ cartItems ])
+        dispatch(createAction(SET_CART_ITEMS, payload))
+    }
 
     const addItemToCart = (productToAdd) => {
         // either add item to cart or increment quantity
-        setCartItems(addCartItem(cartItems, productToAdd))
+        const newCartItems = addCartItem(cartItems, productToAdd)
+        updateCartItemsReducer(newCartItems)
     }
 
     const subtractItemFromCart = (productToRemove) => {
         // decrement cartItem quantity
-        setCartItems(removeCartItem(cartItems, productToRemove))
+        const newCartItems = removeCartItem(cartItems, productToRemove)
+        updateCartItemsReducer(newCartItems)
     }
 
-    const removeItemFromCart = (productToRemove) => {
-        // update quantity to 1 so when run through helper function removeCartItem, 
+    const clearItemFromCart = (productToRemove) => {
         // product will be removed from cart
-        productToRemove.quantity = 1
-        setCartItems(removeCartItem(cartItems, productToRemove))
+        const newCartItems = clearCartItem(cartItems, productToRemove)
+        updateCartItemsReducer(newCartItems)
     }
 
-    const value = { isCartOpen, 
-                    setisCartOpen, 
-                    cartItems, 
-                    setCartItems, 
+    const toggleCartOpen = () => {
+        dispatch(createAction(SET_IS_CART_OPEN, !isCartOpen))
+    }
+
+    const value = { isCartOpen,
+                    cartItems,
+                    cartCount,
+                    cartTotal,
                     addItemToCart, 
                     subtractItemFromCart, 
-                    removeItemFromCart, 
-                    cartCount, 
-                    cartTotal 
+                    clearItemFromCart,
+                    updateCartItemsReducer,
+                    toggleCartOpen
                 };
 
     return <CartContext.Provider value={value}>{ children }</CartContext.Provider>

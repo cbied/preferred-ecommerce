@@ -8,8 +8,8 @@ import { CartDropdownContainer,
          CartItems } from './cart-dropdown.styles';
 
 const CartDropdown = () => {
-    const { cartItems, setisCartOpen } = useContext(CartContext);
-    const toggleCartDropDown = () => setisCartOpen(false);
+    const { cartItems, toggleCartOpen } = useContext(CartContext);
+    const toggleCartDropDown = () => toggleCartOpen();
     return(
         <CartDropdownContainer>
             <CartItems>

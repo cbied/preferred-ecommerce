@@ -9,12 +9,12 @@ import { CheckoutItemContainer,
          RemoveButton} from './checkout-item.styles';
 
 const CheckoutcartItem = ({ cartItem }) => {
-    const { addItemToCart, subtractItemFromCart, removeItemFromCart } = useContext(CartContext);
+    const { addItemToCart, subtractItemFromCart, clearItemFromCart } = useContext(CartContext);
     const { name, quantity, price, imageUrl } = cartItem;
 
     const handleQuantityUpdateIncrease = () => addItemToCart(cartItem)
     const handleQuantityUpdateDecrease = () => subtractItemFromCart(cartItem)
-    const handleRemoveProductFromCart = () => removeItemFromCart(cartItem)
+    const handleRemoveProductFromCart = () => clearItemFromCart(cartItem)
 
     return(
         <CheckoutItemContainer>
