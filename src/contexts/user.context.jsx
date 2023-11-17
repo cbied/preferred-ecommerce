@@ -2,10 +2,7 @@ import { createContext, useEffect, useReducer } from "react"
 import { onAuthStateChangedListener, createUserDocFromAuth } from '../utils/firebase/firebase.utils'
 import { createAction } from "../utils/reducer/reducer.utils"
 
-export const UserContext = createContext({
-    currentUser: null,
-    setCurrentUser: () => null
-})
+export const UserContext = createContext()
 
 export const USER_ACTION_TYPES = {
     SET_CURRENT_USER: 'SET_CURRENT_USER',

@@ -33,7 +33,7 @@ const Checkout = () => {
           <CheckoutItem key={cartItem.id} cartItem={cartItem} />
         ))
           :
-          <NoItemsInCart as='H3'>No Items in cart</NoItemsInCart>
+          <NoItemsInCart>No Items in cart</NoItemsInCart>
       }
         <Total>TOTAL: ${cartTotal}</Total>
       </CheckoutContainer>

@@ -69,17 +69,7 @@ export const cartReducer = (state, action) => {
 
 }
 
-export const CartContext = createContext({
-    isCartOpen: false,
-    setisCartOpen: () => {},
-    cartItems: [],
-    addItemToCart: () => {},
-    subtractItemFromCart: () => {},
-    clearItemFromCart: () => {},
-    cartCount: 0,
-    setCartTotal: () => {},
-    cartTotal: 0
-})
+export const CartContext = createContext()
 
 export const CartProvider = ({ children }) => {
     const [ state, dispatch ] = useReducer(cartReducer, INITIAL_CART_STATE);

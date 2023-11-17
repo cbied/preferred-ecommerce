@@ -25,7 +25,7 @@ export const HeaderBlock = styled.div`
   }
 `;
 
-export const NoItemsInCart = styled.div`
+export const NoItemsInCart = styled.h3`
   width: 100%;
   font-size: 3rem;
   padding: 30px 0;
