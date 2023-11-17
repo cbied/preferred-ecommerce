@@ -7,7 +7,7 @@ const CategoryItem = ({ categoryProduct }) => {
     const categoryLink = `/shop/${title.toLowerCase()}`
     return(
         <CategoryItemContainer>
-            <BackgroungImage imageUrl={imageUrl}/>
+            <BackgroungImage $imageUrl={imageUrl} />
             <CategoryBodyContainer to={categoryLink}>
                 <h2>{ title }</h2>
                 <p>Shop Now</p>
