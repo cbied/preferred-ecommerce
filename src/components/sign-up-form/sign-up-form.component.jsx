@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
 import LoadingPage from '../loading-page/loading-page.componet'
@@ -16,7 +17,7 @@ const defualtFormFields = {
 const SignUpForm = () => {
     const [ formFields, setFormFields ] = useState(defualtFormFields);
     const { displayName, email, password, confirmPassword, isLoading } = formFields;
-
+    const navigate = useNavigate()
     
     
     const submitForm = async (event) => {
@@ -35,8 +36,9 @@ const SignUpForm = () => {
             await createUserDocFromAuth(user, { displayName })
             alert("User created successfully")
             // reset form fields
-            setFormFields(defualtFormFields)
             setFormFields({...formFields, isLoading: false})
+            setFormFields(defualtFormFields)
+            navigate("/shop")
         } catch (error) {
             // Email already in databases
             if(error.code === "auth/email-already-in-use") {

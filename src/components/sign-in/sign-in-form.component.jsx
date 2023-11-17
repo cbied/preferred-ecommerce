@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import FormInput from "../form-input/form-input.component"
 import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component'
 import { signInUserWithEmailAndPassword,
@@ -16,7 +17,7 @@ const defualtFormFields = {
 const SignInForm = () => {
     const [ formFields, setFormFields ] = useState(defualtFormFields);
     const { email, password } = formFields;
-    // set current user to share with other components
+    const navigate = useNavigate()
 
     // update form fields
     const handleChange = (event) => {
@@ -26,7 +27,8 @@ const SignInForm = () => {
 
     const loginGoogleUserPopup = async () => {
         try {
-            await signInWithGooglePopup();   
+            await signInWithGooglePopup();
+            navigate("/shop")
         } catch (error) {
             if (error.code === 'auth/popup-closed-by-user') {
                 console.log(error.code)
@@ -48,6 +50,7 @@ const SignInForm = () => {
                 // set the current user in context to share with other components
                 
                 alert("User Signed in successfully")
+                navigate("/shop")
                 // reset form fields
                 setFormFields(defualtFormFields)
             }
