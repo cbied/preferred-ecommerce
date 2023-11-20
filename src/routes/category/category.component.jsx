@@ -10,7 +10,7 @@ const Category = () => {
     const { category } = useParams()
     const categoriesMap = useSelector(selectCategoriesMap)
     const [ products, setProducts ] = useState(categoriesMap[category])
-    console.log(categoriesMap)
+
     useEffect(() => {
         setProducts(categoriesMap[category])
         window.scrollTo(0, 0);
