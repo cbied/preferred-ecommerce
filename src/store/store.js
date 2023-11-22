@@ -12,9 +12,11 @@ const persistConfig = {
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
-
-const middleWares = [logger]
-const composedEnhancers = compose(applyMiddleware(...middleWares));
+// React Redux chrome extenstion
+const reactReduxComposeEnhancer = process.env.NODE_ENV !== 'production' && window && window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : noop => noop
+// Redux logger middleware
+const middleWares = [process.env.NODE_ENV !== 'production' && logger].filter(Boolean)
+const composedEnhancers = compose(applyMiddleware(...middleWares), reactReduxComposeEnhancer);
 
 export const store = createStore(persistedReducer, undefined, composedEnhancers);
 
