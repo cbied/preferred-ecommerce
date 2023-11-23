@@ -50,7 +50,7 @@ const firebaseConfig = {
     console.log('done')
   }
 
-  export const getCollectionAndDocuments = async (collectionKey) => {
+  export const getCategoriesAndDocuments = async (collectionKey) => {
     const collectionRef = collection(db, collectionKey)
     const q = query(collectionRef)
     const querySnapshot = await getDocs(q)
