@@ -9,6 +9,7 @@ const persistConfig = {
   key: 'root',
   storage,
   // user comes from auth state listener in Firebase
+  // categories is using redux thunk/loading page
   blacklist: ['user', 'categories'],
 }
 

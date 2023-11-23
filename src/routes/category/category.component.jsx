@@ -20,20 +20,14 @@ const Category = () => {
     
     return (
         <Fragment>
+        <LoadingPage isLoading={categoriesIsLoading} />
         <CategoryTitle as='h2'>{ category.toUpperCase() }</CategoryTitle>
-        {
-            categoriesIsLoading ?
-            (<LoadingPage isLoading={categoriesIsLoading} />)
-            :
-            (<CategoryContainer>
+        <CategoryContainer>
                 { 
                     products &&
                     products.map(product => <ProductCard key={product.id} product={product} /> )        
                 }
-            </CategoryContainer>)
-          
-        }
-
+            </CategoryContainer>
         </Fragment>
     )
 }

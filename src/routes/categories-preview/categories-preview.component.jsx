@@ -10,14 +10,10 @@ const CategoriesPreivew = () => {
  
     return (
         <Fragment>
-        { 
-            categoriesIsLoading ?
-            (<LoadingPage isLoading={categoriesIsLoading} />)
-            :
-            (Object.keys(categoriesMap).map(title => {
+            <LoadingPage isLoading={categoriesIsLoading} />
+            {Object.keys(categoriesMap).map(title => {
                 return <CategoryPreview key={title} title={title} products={categoriesMap[title]}/>
-            }))
-        }
+            })}
         </Fragment>
     )
 }
