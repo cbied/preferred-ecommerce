@@ -3,7 +3,9 @@ import logger from 'redux-logger';
 import { rootReducer } from './root-reducer';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
-import thunk from 'redux-thunk';
+// import thunk from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
+import rootSaga from './root-saga';
 
 const persistConfig = {
   key: 'root',
@@ -13,13 +15,15 @@ const persistConfig = {
   blacklist: ['user', 'categories'],
 }
 
+const sagaMiddleware = createSagaMiddleware()
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 // React Redux chrome extenstion
 const reactReduxComposeEnhancer = process.env.NODE_ENV !== 'production' && window && window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : noop => noop
 // Redux logger middleware
 const middleWares = [
     process.env.NODE_ENV !== 'production' && logger,
-    thunk
+    // thunk,
+    sagaMiddleware
 ].filter(Boolean)
 
 const composedEnhancers = compose(applyMiddleware(...middleWares), reactReduxComposeEnhancer);
@@ -27,3 +31,6 @@ const composedEnhancers = compose(applyMiddleware(...middleWares), reactReduxCom
 export const store = createStore(persistedReducer, undefined, composedEnhancers);
 
 export const persistor = persistStore(store)
+
+sagaMiddleware.run(rootSaga)
+
