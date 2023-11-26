@@ -1,7 +1,10 @@
-import { SET_CURRENT_USER } from "./user.types";
+import { SET_CURRENT_USER, CHECK_USER_SESSION, GOOGLE_SIGN_IN_START,
+         EMAIL_SIGN_IN_START, SIGN_IN_SUCCESS, SIGN_IN_FAILED  } from "./user.types";
 
 const INITIAL_STATE = {
-    currentUser: null
+    currentUser: null,
+    isLoading: false,
+    error: null
 }
 
 export const userReducer = (state = INITIAL_STATE, action = {}) => {
@@ -12,6 +15,33 @@ export const userReducer = (state = INITIAL_STATE, action = {}) => {
             return {
                 ...state,
                 currentUser: payload
+            }
+        case CHECK_USER_SESSION:
+            return {
+                ...state,
+                currentUser: payload
+            }
+        case GOOGLE_SIGN_IN_START:
+            return {
+                ...state,
+                isLoading: true
+            }
+        case EMAIL_SIGN_IN_START:
+            return {
+                ...state,
+                isLoading: true
+            }
+        case SIGN_IN_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                currentUser: payload
+            }
+        case SIGN_IN_FAILED:
+            return {
+                ...state,
+                isLoading: false,
+                error: payload
             }
         default:
             return state
