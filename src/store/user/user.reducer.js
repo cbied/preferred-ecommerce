@@ -4,12 +4,11 @@ import { SET_CURRENT_USER, CHECK_USER_SESSION, GOOGLE_SIGN_IN_START,
 const INITIAL_STATE = {
     currentUser: null,
     isLoading: false,
-    error: null
+    error: null,
 }
 
 export const userReducer = (state = INITIAL_STATE, action = {}) => {
     const { type, payload } = action;
-    
     switch (type) {
         case SET_CURRENT_USER:
             return {
@@ -29,7 +28,7 @@ export const userReducer = (state = INITIAL_STATE, action = {}) => {
         case EMAIL_SIGN_IN_START:
             return {
                 ...state,
-                isLoading: true
+                isLoading: true,
             }
         case SIGN_IN_SUCCESS:
             return {
