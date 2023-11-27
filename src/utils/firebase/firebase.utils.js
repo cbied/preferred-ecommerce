@@ -47,9 +47,9 @@ const firebaseConfig = {
     })
 
     await batch.commit()
-    console.log('done')
   }
 
+  // see categories saga
   export const getCategoriesAndDocuments = async (collectionKey) => {
     const collectionRef = collection(db, collectionKey)
     const q = query(collectionRef)
@@ -57,6 +57,7 @@ const firebaseConfig = {
     return querySnapshot.docs.map(docSnapshot => docSnapshot.data())
   }
 
+  // see user saga
   export const createUserDocFromAuth = async (userAuth, additionalInfo = {}) => {
     if (!userAuth) return;
 

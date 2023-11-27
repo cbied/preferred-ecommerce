@@ -31,7 +31,7 @@ const SignInForm = () => {
 
     const submitForm = async (event) => {
         event.preventDefault();
-        // try to authenticate user with firebasse through redux saga
+        // try to authenticate user with firebase through redux saga
         dispatch(emailSignInStart(email, password))
         // reset form fields
         setFormFields(defualtFormFields)

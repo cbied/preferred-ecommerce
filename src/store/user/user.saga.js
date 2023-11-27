@@ -47,8 +47,18 @@ export function* signInWithEmailAndPassword({ payload: { email, password }}) {
         yield call(getSnapshotFromUserAuth, user)
         alert("User Signed in successfully")
     } catch (error) {
-        console.log(error)
         yield put(signInFailed(error))
+        if(error.code === "auth/invalid-login-credentials" || 
+        error.code === "auth/wrong-password") {
+        console.error(error.message)
+        alert("Email or password is invalid")
+        // user not found in db
+        } else if (error.code === "auth/user-not-found") {
+            console.error(error.message)
+            alert("No user was found")
+        } else {
+            console.log('createAuthUserWithEmailAndPassword error: ', error)
+    }
     }
 }
 

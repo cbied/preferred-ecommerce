@@ -23,16 +23,5 @@ export const signInSuccess = (user) => {
 }
 
 export const signInFailed = (error) => {
-    if(error.code === "auth/invalid-login-credentials" || 
-        error.code === "auth/wrong-password") {
-        console.error(error.message)
-        alert("Email or password is invalid")
-        // user not found in db
-    } else if (error.code === "auth/user-not-found") {
-        console.error(error.message)
-        alert("No user was found")
-    } else {
-        console.log('createAuthUserWithEmailAndPassword error: ', error)
-    }
     return createAction(SIGN_IN_FAILED, error);
 }
