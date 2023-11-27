@@ -60,7 +60,6 @@ const firebaseConfig = {
   // see user saga
   export const createUserDocFromAuth = async (userAuth, additionalInfo = {}) => {
     if (!userAuth) return;
-
     const userDocRef = doc(db, 'users', userAuth.uid)
     const userSnapshot = await getDoc(userDocRef)
     if (!userSnapshot.exists()) {
@@ -78,7 +77,6 @@ const firebaseConfig = {
             console.log(error)
         }
     }
-
     return userSnapshot;
 }
 

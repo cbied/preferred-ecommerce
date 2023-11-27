@@ -1,6 +1,7 @@
 import { createAction } from "../../utils/reducer/reducer.utils"
-import { SET_CURRENT_USER, CHECK_USER_SESSION, GOOGLE_SIGN_IN_START,
-         EMAIL_SIGN_IN_START, SIGN_IN_SUCCESS, SIGN_IN_FAILED } from './user.types'
+import { SET_CURRENT_USER, CHECK_USER_SESSION, SIGN_UP_USER_START, 
+         GOOGLE_SIGN_IN_START, EMAIL_SIGN_IN_START, SIGN_IN_SUCCESS,
+         SIGN_IN_FAILED } from './user.types'
 
 export const setCurrentUser = (user) => {
         return createAction(SET_CURRENT_USER, user);
@@ -8,6 +9,10 @@ export const setCurrentUser = (user) => {
 
 export const checkUserSession = () => {
     return createAction(CHECK_USER_SESSION);
+}
+
+export const signUpUserStart = (email, password, displayName) => {
+    return createAction(SIGN_UP_USER_START, { email, password, displayName });
 }
 
 export const googleSignInStart = () => {

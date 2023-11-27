@@ -1,8 +1,8 @@
 import { all, put, call, takeLatest } from 'redux-saga/effects'
-import { CHECK_USER_SESSION, EMAIL_SIGN_IN_START, GOOGLE_SIGN_IN_START } from './user.types'
+import { CHECK_USER_SESSION, EMAIL_SIGN_IN_START, GOOGLE_SIGN_IN_START, SIGN_UP_USER_START } from './user.types'
 import { signInSuccess, signInFailed } from './user.action'
 import { getCurrentUser, createUserDocFromAuth, signInUserWithEmailAndPassword,
-         signInWithGooglePopup } from '../../utils/firebase/firebase.utils'
+         signInWithGooglePopup, createAuthUserWithEmailAndPassword } from '../../utils/firebase/firebase.utils'
 
 export function* getSnapshotFromUserAuth(userAuth, additionalInfo) {
     try {
@@ -16,6 +16,33 @@ export function* getSnapshotFromUserAuth(userAuth, additionalInfo) {
     } catch (error) {
         yield put(signInFailed(error))
     }
+}
+
+// create user account
+export function* onCreateUserAccount() {
+    yield takeLatest(SIGN_UP_USER_START, createUserAccount)
+}
+
+export function* createUserAccount({ payload: { email, password, displayName }}) {    
+    try {
+        const { user } = yield call(createAuthUserWithEmailAndPassword, email, password)
+        yield call(getSnapshotFromUserAuth, user, { displayName })
+        yield call(isUserAuthenticated)
+        alert("User created successfully")
+    } catch (error) {
+        // Email already in databases
+        if(error.code === "auth/email-already-in-use") {
+            console.error(error.message)
+            alert("Email already in use")
+            // password less than 6 characters
+        } else if (error.code === "auth/weak-password") {
+            console.error(error.message)
+            alert("Password must be at least 6 characters long")
+        } else {
+            console.log('createAuthUserWithEmailAndPassword error: ', error)
+        }
+        yield put(signInFailed(error))
+}
 }
 
 // Check if user is signed in
@@ -78,5 +105,10 @@ export function* signInWithGoogle() {
 
 // User Saga
 export function* userSaga() {
-    yield all([call(onCheckUserSession), call(onGoogleSigninStart), call(onEmailSigninStart)]);
+    yield all(
+        [call(onCheckUserSession),
+         call(onGoogleSigninStart),
+         call(onEmailSigninStart),
+         call(onCreateUserAccount)
+        ]);
 }

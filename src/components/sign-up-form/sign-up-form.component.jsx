@@ -1,23 +1,24 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
 import LoadingPage from '../loading-page/loading-page.componet'
-import { createUserDocFromAuth,
-         createAuthUserWithEmailAndPassword } from '../../utils/firebase/firebase.utils'
 import { SignUpContainer, H2 } from './sign-up-form.styles';
+import { useDispatch, useSelector } from "react-redux";
+import { selectUserLoading } from '../../store/user/user.selector';
+import { signUpUserStart } from '../../store/user/user.action';
+
 const defualtFormFields = {
     displayName: "",
     email: "",
     password: "",
     confirmPassword: "",
-    isLoading: false
 }
 
 const SignUpForm = () => {
     const [ formFields, setFormFields ] = useState(defualtFormFields);
-    const { displayName, email, password, confirmPassword, isLoading } = formFields;
-    const navigate = useNavigate()
+    const { displayName, email, password, confirmPassword } = formFields;
+    const isLoading = useSelector(selectUserLoading)
+    const dispatch = useDispatch()
     
     
     const submitForm = async (event) => {
@@ -28,33 +29,10 @@ const SignUpForm = () => {
             alert("Passwords do not match")
             return
         } 
-        setFormFields({...formFields, isLoading: true})
-        try {
-            // try to create new user with email and password
-            const { user } = await createAuthUserWithEmailAndPassword(email, password)
-            // add user display name
-            await createUserDocFromAuth(user, { displayName })
-            alert("User created successfully")
-            // reset form fields
-            setFormFields({...formFields, isLoading: false})
-            setFormFields(defualtFormFields)
-            navigate("/shop")
-        } catch (error) {
-            // Email already in databases
-            if(error.code === "auth/email-already-in-use") {
-                console.error(error.message)
-                alert("Email already in use")
-                setFormFields({...formFields, isLoading: false})
-                // password less than 6 characters
-            } else if (error.code === "auth/weak-password") {
-                console.error(error.message)
-                alert("Password must be at least 6 characters long")
-                setFormFields({...formFields, isLoading: false})
-            } else {
-                console.log('createAuthUserWithEmailAndPassword error: ', error)
-                setFormFields({...formFields, isLoading: false})
-            }
-        }
+
+        setFormFields({...formFields})
+        dispatch(signUpUserStart(email, password, displayName))
+        setFormFields(defualtFormFields)
     }
 
     // update form fields
