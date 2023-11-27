@@ -1,9 +1,11 @@
 import { all, put, call, takeLatest } from 'redux-saga/effects'
-import { CHECK_USER_SESSION, EMAIL_SIGN_IN_START, GOOGLE_SIGN_IN_START, SIGN_OUT_USER, SIGN_UP_USER_START } from './user.types'
-import { signInSuccess, signInFailed } from './user.action'
+import { CHECK_USER_SESSION, EMAIL_SIGN_IN_START, GOOGLE_SIGN_IN_START, 
+         SIGN_UP_USER_START, SIGN_OUT_START } from './user.types'
+import { signInSuccess, signInFailed, signOutUserSuccess, singOutUserFailed } from './user.action'
 import { getCurrentUser, createUserDocFromAuth, signInUserWithEmailAndPassword,
          signInWithGooglePopup, createAuthUserWithEmailAndPassword, signOutUser } from '../../utils/firebase/firebase.utils'
 
+// used for sign up and sign in sagas
 export function* getSnapshotFromUserAuth(userAuth, additionalInfo) {
     try {
         const userSnapshot = yield call(
@@ -42,7 +44,7 @@ export function* createUserAccount({ payload: { email, password, displayName }})
             console.log('createAuthUserWithEmailAndPassword error: ', error)
         }
         yield put(signInFailed(error))
-}
+    }
 }
 
 // Check if user is signed in
@@ -105,15 +107,16 @@ export function* signInWithGoogle() {
 
 // Sign out user
 export function* onSignOutUser() {
-    yield takeLatest(SIGN_OUT_USER, signUserOut)
+    yield takeLatest(SIGN_OUT_START, signUserOut)
 }
 
 export function* signUserOut() {
     try {
         yield call(signOutUser)
+        yield put(signOutUserSuccess())
         alert('User Signed Out')
     } catch (error) {
-        console.log(error)
+        yield put(singOutUserFailed(error))
     }
 }
 

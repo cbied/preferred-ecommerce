@@ -3,7 +3,7 @@ import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUser } from "../../store/user/user.selector";
 import { selectIsCartOpen } from "../../store/cart/cart.selector";
-import { signOutUser } from "../../store/user/user.action"
+import { signOutUserStart } from "../../store/user/user.action"
 import CartIcon from "../../components/cart-icon/cart-icon.component"
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
 import { ReactComponent as CrwnLogo } from '../../assets/crown.svg'
@@ -18,7 +18,7 @@ const Navigation = () => {
     const dispatch = useDispatch()
 
     const handleUserSignOut = () => {
-        dispatch(signOutUser())
+        dispatch(signOutUserStart())
     }
 
     return (
@@ -47,7 +47,6 @@ const Navigation = () => {
                 </NavLinks>
                     {
                         isCartOpen && <CartDropdown />
-                       
                     }
             </NaviagtionContainer>
             <Outlet />
