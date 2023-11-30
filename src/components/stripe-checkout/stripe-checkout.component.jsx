@@ -26,7 +26,24 @@ const StripeCheckout = () => {
         body: JSON.stringify({ amount: 10000 }),
     }).then((res) => res.json())
     
-    console.log(response)
+    const clientSercret = response.paymentIntent.client_secret
+    
+    const paymentResult = stripe.confirmCardPayment(clientSercret, {
+      payment_method: {
+        card: elements.getElement(CardElement),
+        billing_details: {
+          name: 'Chris Biediger'
+        }
+      }
+    })
+
+    if(paymentResult.error) {
+      alert(paymentResult.error)
+    } else {
+      if((await paymentResult).paymentIntent.status === 'successed') {
+        alert("Payment Successful")
+      }
+    }
 
   };
 
