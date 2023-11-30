@@ -40,7 +40,7 @@ const StripeCheckout = () => {
     if(paymentResult.error) {
       alert(paymentResult.error)
     } else {
-      if((await paymentResult).paymentIntent.status === 'successed') {
+      if(paymentResult.paymentIntent.status === 'succeeded') {
         alert("Payment Successful")
       }
     }
