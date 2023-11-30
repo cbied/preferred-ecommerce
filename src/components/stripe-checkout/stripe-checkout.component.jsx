@@ -12,18 +12,19 @@ const StripeCheckout = () => {
     e.preventDefault();
 
     if (!stripe || !elements) {
+        console.log("no stripe or elements found")
       // Stripe.js hasn't yet loaded.
       // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
 
-    const response = await fetch('/.netlify/functions/create-payment-intent', {
-        method: 'post',
+    const response = await fetch("/.netlify/functions/create-payment-intent", {
+        method: "post",
         headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json"
         },
-        body: JSON.stringify({ amount: 10000 })
-    }).then(res => res.json())
+        body: JSON.stringify({ amount: 10000 }),
+    }).then((res) => res.json())
     
     console.log(response)
 
