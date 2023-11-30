@@ -28,7 +28,7 @@ const StripeCheckout = () => {
     
     const clientSercret = response.paymentIntent.client_secret
     
-    const paymentResult = stripe.confirmCardPayment(clientSercret, {
+    const paymentResult = await stripe.confirmCardPayment(clientSercret, {
       payment_method: {
         card: elements.getElement(CardElement),
         billing_details: {
@@ -36,6 +36,8 @@ const StripeCheckout = () => {
         }
       }
     })
+
+    console.log(paymentResult)
 
     if(paymentResult.error) {
       alert(paymentResult.error)
