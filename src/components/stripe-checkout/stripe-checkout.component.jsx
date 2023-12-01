@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
+import { useSelector } from 'react-redux';
+import { selectCurrentUser } from '../../store/user/user.selector';
+import { selectCartTotal } from '../../store/cart/cart.selector'
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 import { StripeContainer, FormContainer } from './stripe-checkout.styles'
@@ -6,6 +9,11 @@ import { StripeContainer, FormContainer } from './stripe-checkout.styles'
 const StripeCheckout = () => {
   const stripe = useStripe();
   const elements = useElements();
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+  const user = useSelector(selectCurrentUser)
+  const cartTotal = useSelector(selectCartTotal)
+  console.log(Boolean(user))
+  console.log(cartTotal)
 
 
   const handleSubmit = async (e) => {
@@ -18,43 +26,57 @@ const StripeCheckout = () => {
       return;
     }
 
+    setIsProcessingPayment(true);
+
     const response = await fetch("/.netlify/functions/create-payment-intent", {
         method: "post",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ amount: 10000 }),
-    }).then((res) => res.json())
-    
-    const clientSercret = response.paymentIntent.client_secret
-    
-    const paymentResult = await stripe.confirmCardPayment(clientSercret, {
-      payment_method: {
-        card: elements.getElement(CardElement),
-        billing_details: {
-          name: 'Chris Biediger'
-        }
-      }
+        body: JSON.stringify({ amount: cartTotal * 100 }),
     })
+    .then((res) => res.json())
+    .catch(error => {
+      console.log(error)
+      alert('Payment did not go through')
+      setIsProcessingPayment(false);
+    })
+    
+    if(response) {
+    const clientSercret = response.paymentIntent.client_secret
 
-    console.log(paymentResult)
-
-    if(paymentResult.error) {
-      alert(paymentResult.error)
-    } else {
-      if(paymentResult.paymentIntent.status === 'succeeded') {
-        alert("Payment Successful")
+    const paymentResult = await stripe.confirmCardPayment(clientSercret, {
+    payment_method: {
+      card: elements.getElement(CardElement),
+      billing_details: {
+        name: user ? user.displayName : 'guest'
       }
     }
+  })
 
+  if(paymentResult.error) {
+    alert(paymentResult.error)
+  } else {
+    if(paymentResult.paymentIntent.status === 'succeeded') {
+      alert("Payment Successful")
+    }
+  }
+  }
+
+    setIsProcessingPayment(false);
   };
 
   return (
     <StripeContainer>
         <FormContainer onSubmit={handleSubmit}>
             <CardElement/>
-            <Button buttonType={BUTTON_TYPE_CLASSES.inverted}
-            disabled={ !stripe || !elements }>Pay now</Button>
+            { !stripe || !elements ?
+
+              <Button buttonType={BUTTON_TYPE_CLASSES.disabled}>oops, something is wrong</Button>
+              :
+              <Button buttonType={BUTTON_TYPE_CLASSES.inverted} isLoading={isProcessingPayment}>Pay now</Button>
+
+            }
         </FormContainer>
     </StripeContainer>
   );

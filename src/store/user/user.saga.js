@@ -14,7 +14,6 @@ export function* getSnapshotFromUserAuth(userAuth, additionalInfo) {
             additionalInfo
         )
         yield put(signInSuccess({ id: userSnapshot.id , ...userSnapshot.data() }))
-        
     } catch (error) {
         yield put(signInFailed(error))
     }
@@ -30,7 +29,6 @@ export function* createUserAccount({ payload: { email, password, displayName }})
         const { user } = yield call(createAuthUserWithEmailAndPassword, email, password)
         yield call(getSnapshotFromUserAuth, user, { displayName })
         yield call(isUserAuthenticated)
-        alert("User created successfully")
     } catch (error) {
         // Email already in databases
         if(error.code === "auth/email-already-in-use") {
@@ -74,7 +72,8 @@ export function* signInWithEmailAndPassword({ payload: { email, password }}) {
             email,
             password)
         yield call(getSnapshotFromUserAuth, user)
-        alert("User Signed in successfully")
+        
+
     } catch (error) {
         yield put(signInFailed(error))
         if(error.code === "auth/invalid-login-credentials" || 
@@ -100,6 +99,7 @@ export function* signInWithGoogle() {
     try {
         const { user } = yield call(signInWithGooglePopup)
         yield call(getSnapshotFromUserAuth, user)
+
     } catch (error) {
         yield put(signInFailed(error))
     }
