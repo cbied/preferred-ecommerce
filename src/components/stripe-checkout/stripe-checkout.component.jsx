@@ -39,10 +39,12 @@ const StripeCheckout = () => {
       setIsProcessingPayment(false);
     })
     
+    let clientSercret;
+    let paymentResult;
     if(response) {
-    const clientSercret = response.paymentIntent.client_secret
+    clientSercret = response.paymentIntent.client_secret
 
-    const paymentResult = await stripe.confirmCardPayment(clientSercret, {
+    paymentResult = await stripe.confirmCardPayment(clientSercret, {
     payment_method: {
       card: elements.getElement(CardElement),
       billing_details: {
@@ -50,15 +52,15 @@ const StripeCheckout = () => {
       }
     }
   })
+  }
 
-  if(paymentResult.error) {
+  if(paymentResult && paymentResult?.error) {
     console.log(paymentResult.error)
     alert('Payment did not go through')
   } else {
-    if(paymentResult.paymentIntent.status === 'succeeded') {
+    if(paymentResult && paymentResult?.paymentIntent.status === 'succeeded') {
       alert("Payment Successful")
     }
-  }
   }
 
     setIsProcessingPayment(false);
