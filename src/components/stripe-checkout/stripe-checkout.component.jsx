@@ -12,9 +12,6 @@ const StripeCheckout = () => {
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const user = useSelector(selectCurrentUser)
   const cartTotal = useSelector(selectCartTotal)
-  console.log(Boolean(user))
-  console.log(cartTotal)
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,7 +52,8 @@ const StripeCheckout = () => {
   })
 
   if(paymentResult.error) {
-    alert(paymentResult.error)
+    console.log(paymentResult.error)
+    alert('Payment did not go through')
   } else {
     if(paymentResult.paymentIntent.status === 'succeeded') {
       alert("Payment Successful")
