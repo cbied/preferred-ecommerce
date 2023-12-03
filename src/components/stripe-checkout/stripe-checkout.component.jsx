@@ -55,8 +55,7 @@ const StripeCheckout = () => {
   }
 
   if(paymentResult && paymentResult?.error) {
-    console.log(paymentResult.error)
-    alert('Payment did not go through')
+    alert(paymentResult.error.message)
   } else {
     if(paymentResult && paymentResult?.paymentIntent.status === 'succeeded') {
       alert("Payment Successful")
