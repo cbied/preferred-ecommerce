@@ -1,9 +1,13 @@
-import './loading-page.styles.scss'
+import './loading-page.styles.scss';
 
-const LoadingPage = ({ isLoading }) => {
+type LoadingPageProps = {
+    isLoading: boolean
+}
+
+const LoadingPage = ({ isLoading }: LoadingPageProps) => {
         return (
              isLoading ? 
-                <div className="loading" align="center">
+                <div className="loading">
                 <div className="main">
                     <div className="small1">
                     <div className="small ball smallball1"></div>
