@@ -1,9 +1,15 @@
-import ProductCard from '../product-card/product-card.component'
-import { Link } from 'react-router-dom'
+import ProductCard from '../product-card/product-card.component';
+import { Link } from 'react-router-dom';
 import { CategoryPreviewContainer,
-         Title, Preview, ViewMore } from './category-preview.styles'
+         Title, Preview, ViewMore } from './category-preview.styles';
+import { Item } from '../../types/types';
 
-const CategoryPreview = ({ title, products }) => {
+type CategoryPreviewProp = {
+    title: string,
+    products: Item[]
+}
+
+const CategoryPreview = ({ title, products }: CategoryPreviewProp) => {
 
     return(
         <CategoryPreviewContainer>

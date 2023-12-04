@@ -1,6 +1,15 @@
 export type Item = {
     id: number,
-    name: string,
     imageUrl: string,
+    name: string,
     price: number,
+    quantity?: number
 }
+
+export type CategoryProduct = {
+    id: number,
+    imageUrl: string,
+    title: string
+}
+
+
