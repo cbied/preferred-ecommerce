@@ -12,4 +12,8 @@ export type CategoryProduct = {
     title: string
 }
 
+export type Categories = {
+    title: string,
+    items: Item[]
+}
 
