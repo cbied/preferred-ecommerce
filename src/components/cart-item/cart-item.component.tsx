@@ -1,10 +1,10 @@
 import { CartItemContainer,
          ItemDetails,
          ItemDetailsValues } from './cart-item.styles';
-import { Item } from '../../types/types';
+import { CategoryItem } from '../../store/categories/categories.types';
 
 type CartItemProps = {
-    cartItem: Item
+    cartItem: CategoryItem
 }
 
 const CartItem = ({ cartItem }: CartItemProps) => {

@@ -3,7 +3,7 @@ import { FETCH_CATEGORIES_START,
          FETCH_CATEGORIES_SUCCESS, 
          FETCH_CATEGORIES_FAILED,
          CATEGORIES_ACTION_TYPES } from "./categories.types";
-import { Categories } from '../../types/types';
+import { Categories } from './categories.types';
 
 export type FetchCategoriesStart = Action<CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_START>
 export type FetchCategoriesSuccess = ActionWithPayload<CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_SUCCESS, Categories[]>

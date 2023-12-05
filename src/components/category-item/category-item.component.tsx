@@ -1,7 +1,7 @@
 import { BackgroungImage,
          CategoryBodyContainer,
          CategoryItemContainer} from './category-item.styles';
-import { CategoryProduct } from '../../types/types';
+import { CategoryProduct } from '../../store/categories/categories.types';
 
 type CategoryItemProps = {
     categoryProduct: CategoryProduct

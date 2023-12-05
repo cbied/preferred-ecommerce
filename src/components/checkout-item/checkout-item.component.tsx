@@ -8,10 +8,10 @@ import { CheckoutItemContainer,
 import { useDispatch, useSelector } from 'react-redux';
 import { setAddItemToCart, setClearItemFromCart, setSubtractItemFromCart } from '../../store/cart/cart.action';
 import { selectCartItems } from '../../store/cart/cart.selector';
-import { Item } from '../../types/types';
+import { CategoryItem } from '../../store/categories/categories.types';
 
 type CheckoutcartItemProps = {
-    cartItem: Item
+    cartItem: CategoryItem
 }
 
 const CheckoutcartItem = ({ cartItem }: CheckoutcartItemProps) => {
