@@ -11,15 +11,15 @@ export type FetchCategoriesFailed = ActionWithPayload<CATEGORIES_ACTION_TYPES.FE
 
 export const fetchCategoriesStart = withMatcher(
     (): FetchCategoriesStart => {
-    return createAction(FETCH_CATEGORIES_START)
+    return createAction(FETCH_CATEGORIES_START);
 })
 
 export const fetchCategoriesSuccess = withMatcher(
     (categoriesArray: Categories[]): FetchCategoriesSuccess => {
-    return createAction(FETCH_CATEGORIES_SUCCESS, categoriesArray)
+    return createAction(FETCH_CATEGORIES_SUCCESS, categoriesArray);
 })
 
 export const fetchCategoriesFailed = withMatcher(
     (error: Error): FetchCategoriesFailed => {
-    return createAction(FETCH_CATEGORIES_FAILED, error)
+    return createAction(FETCH_CATEGORIES_FAILED, error);
 })
