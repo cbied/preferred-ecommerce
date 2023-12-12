@@ -5,10 +5,9 @@ import { useParams } from 'react-router-dom'
 import ProductCard from '../../components/product-card/product-card.component'
 import LoadingPage from '../../components/loading-page/loading-page.componet'
 import { CategoryContainer, CategoryTitle } from './category.styles'
-import { CategoryItem } from '../../store/categories/categories.types'
 
 const Category = () => {
-    const { category = '' } = useParams<{category?: string}>()
+    const { category = '' } = useParams()
     const categoriesMap = useSelector(selectCategoriesMap)
     const categoriesIsLoading = useSelector(selectCategoriesIsLoading)
     const [ products, setProducts ] = useState(categoriesMap[category])
@@ -25,7 +24,7 @@ const Category = () => {
         <CategoryContainer>
                 { 
                     products &&
-                    products.map((product:CategoryItem) => <ProductCard key={product.id} product={product} /> )        
+                    products.map((product) => <ProductCard key={product.id} product={product} /> )        
                 }
             </CategoryContainer>
         </Fragment>

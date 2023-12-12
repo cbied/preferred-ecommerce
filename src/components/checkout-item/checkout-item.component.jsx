@@ -8,13 +8,8 @@ import { CheckoutItemContainer,
 import { useDispatch, useSelector } from 'react-redux';
 import { setAddItemToCart, setClearItemFromCart, setSubtractItemFromCart } from '../../store/cart/cart.action';
 import { selectCartItems } from '../../store/cart/cart.selector';
-import { CartItemType } from '../../store/cart/cart.types';
 
-type CheckoutcartItemProps = {
-    cartItem: CartItemType
-}
-
-const CheckoutcartItem = ({ cartItem }: CheckoutcartItemProps) => {
+const CheckoutcartItem = ({ cartItem }) => {
     const dispatch = useDispatch()
     const { name, quantity, price, imageUrl } = cartItem;
     const cartItems = useSelector(selectCartItems)

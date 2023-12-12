@@ -1,10 +1,6 @@
 import './loading-page.styles.scss';
 
-type LoadingPageProps = {
-    isLoading: boolean
-}
-
-const LoadingPage = ({ isLoading }: LoadingPageProps) => {
+const LoadingPage = ({ isLoading }) => {
         return (
              isLoading ? 
                 <div className="loading">

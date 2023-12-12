@@ -8,14 +8,14 @@ import { selectCartCount, selectIsCartOpen } from '../../store/cart/cart.selecto
 
 const CartIcon = () => {
     const dispatch = useDispatch()
-    // const cartCount = useSelector(selectCartCount)
+    const cartCount = useSelector(selectCartCount)
     const toggleCartOpen = useSelector(selectIsCartOpen)
     const toggleCartDropDown = () => dispatch(setToggleIsCartOpen(toggleCartOpen))
 
     return(
         <CartIconContainer onClick={toggleCartDropDown}>
             <ShoppingIconSvg className='shopping-icon'/>
-            {/* <ItemCount>{cartCount}</ItemCount> */}
+             <ItemCount>{cartCount}</ItemCount>
         </CartIconContainer>
     )
 }
