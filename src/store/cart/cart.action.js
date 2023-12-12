@@ -6,14 +6,10 @@ export const setToggleIsCartOpen = (cartOpen) => {
     return createAction(SET_IS_CART_OPEN, !cartOpen);
 }
 
-export const setCartItems = (cartItems) => {
-    return createAction(SET_CART_ITEMS, cartItems)
-}
-
 export const setAddItemToCart = (productToAdd, cartItems) => {
     // either add item to cart or increment quantity
     const newCartItems = addCartItem(cartItems, productToAdd)
-    return setCartItems(newCartItems)
+    return createAction(SET_CART_ITEMS, newCartItems)
 }
 
 export const setSubtractItemFromCart = (productToRemove, cartItems) => {

@@ -10,6 +10,7 @@ import rootSaga from './root-saga';
 const persistConfig = {
   key: 'root',
   storage,
+  whitelist: ['cart'],
   // user comes from auth state listener in Firebase
   // categories is using redux thunk/loading page
   blacklist: ['user', 'categories'],
@@ -30,7 +31,8 @@ const composedEnhancers = compose(applyMiddleware(...middleWares), reactReduxCom
 
 export const store = createStore(persistedReducer, undefined, composedEnhancers);
 
+sagaMiddleware.run(rootSaga)
+
 export const persistor = persistStore(store)
 
-sagaMiddleware.run(rootSaga)
 
