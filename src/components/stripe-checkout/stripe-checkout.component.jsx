@@ -67,6 +67,8 @@ const StripeCheckout = () => {
 
   return (
     <StripeContainer>
+    <p>*** This is for display purposes only, please do not use real card information, Thank you.</p>
+    <p>*** If you would like to test the payment system, repeat "42" for card information, until info is filled out</p>
         <FormContainer onSubmit={handleSubmit}>
             <CardElement/>
             { !stripe || !elements ?
