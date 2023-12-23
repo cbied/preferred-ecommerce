@@ -9,7 +9,6 @@ export const fetchCategoriesStart = () => {
 }
 
 export const fetchCategoriesSuccess = (categoriesArray) => {
-    console.log(categoriesArray)
     return createAction(FETCH_CATEGORIES_SUCCESS, categoriesArray);
 }
 
