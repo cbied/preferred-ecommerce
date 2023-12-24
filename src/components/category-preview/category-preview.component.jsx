@@ -2,8 +2,12 @@ import ProductCard from '../product-card/product-card.component';
 import { Link } from 'react-router-dom';
 import { CategoryPreviewContainer,
          Title, Preview, ViewMore } from './category-preview.styles';
+import { SHOP_DATA } from '../../shop-data'
+import { useSelector } from 'react-redux';
+import { selectCategories } from '../../store/categories/categories.selectors'
 
 const CategoryPreview = ({ title, products }) => {
+    const categoiresArray = useSelector(selectCategories)
 
     return(
         <CategoryPreviewContainer>
@@ -14,13 +18,21 @@ const CategoryPreview = ({ title, products }) => {
                     </Title>
                 </h2>
             
-            <Preview>
+            {
+                <Preview>
                 {
+                    categoiresArray.length === 0 ? 
+                    SHOP_DATA.slice(0,4)
+                    .map((product) => <ProductCard key={product.id} product={product}/>)
+                    :
                     products
                     .slice(0,4)
                     .map((product) => <ProductCard key={product.id} product={product}/>)
-                }
-            </Preview>
+                }  
+                </Preview>
+                
+            }
+
             <ViewMore>
                 <Link to={title}>View More</Link>
             </ViewMore>

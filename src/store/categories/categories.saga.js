@@ -5,8 +5,14 @@ import { FETCH_CATEGORIES_START } from "./categories.types"
 
 export function* fetchCategoriesAsync() {
     try {
+
         const categoriesArray = yield call(getCategoriesAndDocuments, 'categories')
-        yield put(fetchCategoriesSuccess(categoriesArray))
+        if (categoriesArray.length) {
+            yield put(fetchCategoriesSuccess(categoriesArray))
+        } else {
+            yield put(fetchCategoriesFailed('error - categoriesArray is empty'))
+            throw new Error(error => console.log(error));
+        }
     } catch(error) {
         yield put(fetchCategoriesFailed(error))
     }

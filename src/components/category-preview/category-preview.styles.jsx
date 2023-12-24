@@ -17,6 +17,10 @@ export const Preview = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   column-gap: 20px;
+
+  @media only screen and (max-width: 550px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `;
 
 export const ViewMore = styled.p`

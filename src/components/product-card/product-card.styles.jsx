@@ -39,6 +39,11 @@ export const Footer = styled.div`
   display: flex;
   justify-content: space-between;
   font-size: 1.5rem;
+
+  @media only screen and (max-width: 550px) {
+    height: 10%;
+    font-size: 1.2rem;
+  }
 `;
 
 export const Name = styled.span`

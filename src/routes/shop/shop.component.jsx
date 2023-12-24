@@ -1,9 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchCategoriesStart } from '../../store/categories/categories.actions'
-import { Routes, Route } from 'react-router-dom'
-import CategoriesPreivew from '../categories-preview/categories-preview.component';
-import Category from '../category/category.component';
+import { Routes, Route } from 'react-router-dom';
+import LoadingPage from '../../components/loading-page/loading-page.componet';
+
+const CategoriesPreivew = lazy(() => import('../categories-preview/categories-preview.component'));
+const Category = lazy(() => import('../category/category.component'));
 
 const Shop = () => {
     const dispatch = useDispatch()
@@ -14,10 +16,12 @@ const Shop = () => {
 
 
     return (
-        <Routes>
-            <Route index element={ <CategoriesPreivew />} />
-            <Route path=':category' element={ <Category /> } />
-        </Routes>
+        <Suspense fallback={<LoadingPage />}>
+            <Routes>
+                <Route index element={ <CategoriesPreivew />} />
+                <Route path=':category' element={ <Category /> } />
+            </Routes>
+        </Suspense>
     )
         
 }

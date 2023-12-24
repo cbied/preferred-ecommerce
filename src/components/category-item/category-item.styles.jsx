@@ -61,4 +61,9 @@ export const CategoryItemContainer = styled.div`
   &:last-child {
     margin-left: 7.5px;
   }
+
+  @media only screen and (max-width: 550px) {
+    min-width: 90%;
+  }
 `;
+

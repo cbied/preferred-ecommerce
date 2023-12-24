@@ -28,7 +28,7 @@ const Navigation = () => {
                     <div><CrwnLogo /></div>
                 </LogoContainer>
                 <NavLinks>
-                    <NavLink to="/shop">
+                    <NavLink to="/shop" rel="preload">
                         SHOP
                     </NavLink>
                     { currentUser ?

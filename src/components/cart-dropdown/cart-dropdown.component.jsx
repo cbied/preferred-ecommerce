@@ -26,7 +26,7 @@ const CartDropdown = () => {
                     <EmptyMessage>No Cart Items</EmptyMessage>
                 }
             </CartItems>
-            <Link to="/checkout">       
+            <Link to="/checkout" rel="preload">       
             <Button onClick={toggleCartDropDown}>Go to Checkout</Button>
             </Link>
         </CartDropdownContainer>
