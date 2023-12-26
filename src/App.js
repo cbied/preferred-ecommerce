@@ -2,6 +2,7 @@ import { useEffect, lazy, Suspense } from 'react';
 import { useDispatch } from 'react-redux';
 import { Routes, Route } from 'react-router-dom'
 import { checkUserSession } from './store/user/user.action';
+import GlobalStyle from './global.styles';
 import Navigation from './routes/navigation/navigation.component';
 import LoadingPage from './components/loading-page/loading-page.componet';
 
@@ -19,6 +20,7 @@ const App = () => {
 
   return (
     <Suspense fallback={<LoadingPage />}>
+    <GlobalStyle />
       <Routes>
         <Route path='/' element={ <Navigation /> }>
           <Route index element={ <Home /> } />

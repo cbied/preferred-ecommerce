@@ -3,7 +3,6 @@ import categoryData from '../../assets/categories.json';
 import { DirectoryContainer } from './directory.styles';
 
 const Directory = () => {
-  console.log(categoryData)
     return (
         <DirectoryContainer>
       {

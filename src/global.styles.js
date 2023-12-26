@@ -1,3 +1,6 @@
+import { createGlobalStyle } from "styled-components";
+
+const GlobalStyle = createGlobalStyle`
 html {
   scroll-behavior: smooth;
 }
@@ -23,3 +26,6 @@ a {
 * {
   box-sizing: border-box;
 }
+`
+
+export default GlobalStyle;

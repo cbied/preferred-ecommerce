@@ -8,7 +8,6 @@ const INITIAL_CATEGORIES_STATE = {
 
 export const categoriesReducer = (state = INITIAL_CATEGORIES_STATE, action = {}) => {
     const { type, payload } = action;
-    console.log(payload)
     switch(type) {
         case FETCH_CATEGORIES_START:
             return { ...state, isLoading: true }
