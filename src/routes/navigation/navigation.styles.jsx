@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const NaviagtionContainer = styled.div`
   height: 70px;
-  width: 100%;
+  width: 90vw;
   display: flex;
   justify-content: space-between;
   margin-bottom: 25px;
@@ -13,6 +13,10 @@ export const LogoContainer = styled(Link)`
   height: 100%;
   width: 70px;
   padding: 25px;
+
+  @media screen and (max-width: 550px) {
+    padding: 15px;
+  }
 `;
 
 export const NavLinks = styled.div`
@@ -21,6 +25,10 @@ export const NavLinks = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+
+  @media screen and (max-width: 550px) {
+    width: 60%;
+  }
 `;
 
 export const NavLink = styled(Link)`
