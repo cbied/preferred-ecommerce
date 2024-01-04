@@ -40,7 +40,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test:coverage": "react-scripts test --env=jsdom --watchAll=true --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
