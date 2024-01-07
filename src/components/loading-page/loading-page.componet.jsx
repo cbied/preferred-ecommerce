@@ -3,7 +3,7 @@ import './loading-page.styles.scss';
 const LoadingPage = ({ isLoading }) => {
         return (
              isLoading ? 
-                <div className="loading">
+                <div className="loading" data-testid="loading-component">
                 <div className="main">
                     <div className="small1">
                     <div className="small ball smallball1"></div>

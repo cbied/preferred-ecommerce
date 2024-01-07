@@ -14,7 +14,7 @@ const Category = () => {
 
     useEffect(() => {
         setProducts(categoriesMap[category])
-        window.scrollTo(0, 0);
+        // window.scrollTo(0, 0);
     }, [category, categoriesMap])
     
     return (
