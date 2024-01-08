@@ -1,6 +1,6 @@
 import { FETCH_CATEGORIES_START, FETCH_CATEGORIES_SUCCESS, FETCH_CATEGORIES_FAILED } from './categories.types';
 
-const INITIAL_CATEGORIES_STATE = {
+export const INITIAL_CATEGORIES_STATE = {
     categories: [],
     isLoading: false,
     error: null
